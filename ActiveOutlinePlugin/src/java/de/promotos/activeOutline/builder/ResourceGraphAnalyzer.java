@@ -1,7 +1,12 @@
 package de.promotos.activeOutline.builder;
 
+import java.util.Optional;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
@@ -11,35 +16,68 @@ import org.eclipse.ui.console.MessageConsoleStream;
 public class ResourceGraphAnalyzer implements ResourceAnalyzer {
 
 	private static final String CONSOLE_NAME = "Active Outline";
-	
+
 	@Override
-	public void analyze(IResource resource) {
-		   MessageConsole myConsole = findConsole(CONSOLE_NAME);
-		   MessageConsoleStream out = myConsole.newMessageStream();
-		   out.println("Analyze: " + resource);
+	public void analyze(final IResource resource) {
+		changed(resource);
 	}
 
 	@Override
 	public void analyze(IResourceDelta delta) {
-		IResource resource = delta.getResource();
-		
-	   MessageConsole myConsole = findConsole(CONSOLE_NAME);
-	   MessageConsoleStream out = myConsole.newMessageStream();
-	   
-		
+		final IResource resource = delta.getResource();
+
 		switch (delta.getKind()) {
-		case IResourceDelta.ADDED:
-			out.println("Analyze added: " + resource);
-			break;
-		case IResourceDelta.REMOVED:
-			out.println("Analyze removed: " + resource);
-			break;
-		case IResourceDelta.CHANGED:
-			out.println("Analyze changed: " + resource);
-			break;
+			case IResourceDelta.ADDED:
+				added(resource);
+				break;
+			case IResourceDelta.CHANGED:
+				changed(resource);
+				break;
+			case IResourceDelta.REMOVED:
+				removed(resource);;
+				break;
+		}
+	}
+
+	private void added(final IResource resource) {
+		Optional<IFile> javaFile = getJavaIFile(resource);
+		if (javaFile.isPresent()) {
+			
+			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
+			getOut().println("Added CU: " + cu.orElseThrow());
 		}
 	}
 	
+	private void changed(final IResource resource) {
+		Optional<IFile> javaFile = getJavaIFile(resource);
+		if (javaFile.isPresent()) {
+			
+			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
+			getOut().println("Changed CU: " + cu.orElseThrow());
+		}
+	}
+	
+	private void removed(final IResource resource) {
+		Optional<IFile> javaFile = getJavaIFile(resource);
+		if (javaFile.isPresent()) {
+			
+			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
+			getOut().println("Removed CU: " + cu.orElseThrow());
+		}
+	}
+	
+	private Optional<IFile> getJavaIFile(final IResource resource) {
+		if (resource instanceof IFile && resource.getName().endsWith(".java")) {
+			return Optional.of( (IFile) resource);
+		}
+		return Optional.empty();
+	}
+
+	private MessageConsoleStream getOut() {
+		MessageConsole myConsole = findConsole(CONSOLE_NAME);
+		return myConsole.newMessageStream();
+	}
+
 	private MessageConsole findConsole(String name) {
 		ConsolePlugin plugin = ConsolePlugin.getDefault();
 		IConsoleManager conMan = plugin.getConsoleManager();
