@@ -1,6 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ActiveOutlinePlugin
-Bundle-SymbolicName: ActiveOutlinePlugin
+Bundle-SymbolicName: ActiveOutlinePlugin;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Automatic-Module-Name: ActiveOutlinePlugin
+Require-Bundle: org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ui.console;bundle-version="3.8.0"

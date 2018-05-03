@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="IncrementalGraphBuilder"
+         name="Active Outline Graph Project Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="de.promotos.activeOutline.builder.IncrementalGraphBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="activeOutlineNature"
+         name="Active Outline Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="de.promotos.activeOutline.builder.ActiveOutlineNature">
+         </run>
+      </runtime>
+      <builder
+            id="ActiveOutlinePlugin.IncrementalGraphBuilder">
+      </builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="ActiveOutlinePlugin.activeOutlineNature.category"
+            name="Active Outline Project Nature commands">
+      </category>
+      <command
+            categoryId="ActiveOutlinePlugin.activeOutlineNature.category"
+            defaultHandler="de.promotos.activeOutline.builder.AddRemoveActiveOutlineNatureHandler"
+            id="ActiveOutlinePlugin.addRemoveActiveOutlineNature"
+            name="Add/RemoveActive Outline Project Nature">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
+         <command
+               commandId="ActiveOutlinePlugin.addRemoveActiveOutlineNature"
+               label="Disable Active Outline builder"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                        <test
+                              property="org.eclipse.core.resources.projectNature"
+                              value="ActiveOutlinePlugin.activeOutlineNature">
+                        </test>
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="ActiveOutlinePlugin.addRemoveActiveOutlineNature"
+               label="Enable Active Outline builder"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                        <not>
+                           <test
+                                 property="org.eclipse.core.resources.projectNature"
+                                 value="ActiveOutlinePlugin.activeOutlineNature">
+                           </test>
+                        </not>
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         id="xmlProblem"
+         name="XML Problem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+
+</plugin>
