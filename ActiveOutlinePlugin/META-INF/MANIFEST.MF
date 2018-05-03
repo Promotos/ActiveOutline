@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ActiveOutlinePlugin
+Bundle-SymbolicName: ActiveOutlinePlugin
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: ActiveOutlinePlugin
