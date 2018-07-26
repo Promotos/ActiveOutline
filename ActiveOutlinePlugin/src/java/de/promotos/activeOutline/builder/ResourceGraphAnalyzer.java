@@ -7,15 +7,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.ui.console.ConsolePlugin;
-import org.eclipse.ui.console.IConsole;
-import org.eclipse.ui.console.IConsoleManager;
-import org.eclipse.ui.console.MessageConsole;
-import org.eclipse.ui.console.MessageConsoleStream;
+
+import de.promotos.activeOutline.console.ActiveOutlineConsole;
 
 public class ResourceGraphAnalyzer implements ResourceAnalyzer {
-
-	private static final String CONSOLE_NAME = "Active Outline";
 
 	@Override
 	public void analyze(final IResource resource) {
@@ -45,7 +40,7 @@ public class ResourceGraphAnalyzer implements ResourceAnalyzer {
 		if (javaFile.isPresent()) {
 
 			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
-			getOut().println("Added CU: " + cu.orElseThrow());
+			ActiveOutlineConsole.out().println("Added CU: " + cu.orElseThrow());
 		}
 	}
 
@@ -54,7 +49,7 @@ public class ResourceGraphAnalyzer implements ResourceAnalyzer {
 		if (javaFile.isPresent()) {
 
 			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
-			getOut().println("Changed CU: " + cu.orElseThrow());
+			ActiveOutlineConsole.out().println("Changed CU: " + cu.orElseThrow());
 		}
 	}
 
@@ -63,7 +58,7 @@ public class ResourceGraphAnalyzer implements ResourceAnalyzer {
 		if (javaFile.isPresent()) {
 
 			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
-			getOut().println("Removed CU: " + cu.orElseThrow());
+			ActiveOutlineConsole.out().println("Removed CU: " + cu.orElseThrow());
 		}
 	}
 
@@ -72,24 +67,6 @@ public class ResourceGraphAnalyzer implements ResourceAnalyzer {
 			return Optional.of((IFile) resource);
 		}
 		return Optional.empty();
-	}
-
-	private MessageConsoleStream getOut() {
-		MessageConsole myConsole = findConsole(CONSOLE_NAME);
-		return myConsole.newMessageStream();
-	}
-
-	private MessageConsole findConsole(String name) {
-		ConsolePlugin plugin = ConsolePlugin.getDefault();
-		IConsoleManager conMan = plugin.getConsoleManager();
-		IConsole[] existing = conMan.getConsoles();
-		for (int i = 0; i < existing.length; i++)
-			if (name.equals(existing[i].getName()))
-				return (MessageConsole) existing[i];
-		// no console found, so create a new one
-		MessageConsole myConsole = new MessageConsole(name, null);
-		conMan.addConsoles(new IConsole[] { myConsole });
-		return myConsole;
 	}
 
 }
