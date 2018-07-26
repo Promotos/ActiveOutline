@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.JavaCore;
 
 import de.promotos.activeOutline.console.ActiveOutlineConsole;
 
-public class ResourceGraphAnalyzer implements Visitable {
+public class ConsolePrinterVisitor implements Visitable {
 
 	@Override
 	public boolean visit(final IResource resource) {
@@ -21,7 +21,6 @@ public class ResourceGraphAnalyzer implements Visitable {
 	@Override
 	public boolean visit(IResourceDelta delta) {
 		final IResource resource = delta.getResource();
-
 		switch (delta.getKind()) {
 		case IResourceDelta.ADDED:
 			added(resource);
@@ -31,37 +30,21 @@ public class ResourceGraphAnalyzer implements Visitable {
 			break;
 		case IResourceDelta.REMOVED:
 			removed(resource);
-			;
 			break;
 		}
 		return true;
 	}
 
 	private void added(final IResource resource) {
-		Optional<IFile> javaFile = getJavaIFile(resource);
-		if (javaFile.isPresent()) {
-
-			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
-			ActiveOutlineConsole.out().println("Added CU: " + cu.orElseThrow());
-		}
+		print("Added", resource);
 	}
 
 	private void changed(final IResource resource) {
-		Optional<IFile> javaFile = getJavaIFile(resource);
-		if (javaFile.isPresent()) {
-
-			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
-			ActiveOutlineConsole.out().println("Changed CU: " + cu.orElseThrow());
-		}
+		print("Changed", resource);
 	}
 
 	private void removed(final IResource resource) {
-		Optional<IFile> javaFile = getJavaIFile(resource);
-		if (javaFile.isPresent()) {
-
-			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
-			ActiveOutlineConsole.out().println("Removed CU: " + cu.orElseThrow());
-		}
+		print("Removed", resource);
 	}
 
 	private Optional<IFile> getJavaIFile(final IResource resource) {
@@ -69,6 +52,14 @@ public class ResourceGraphAnalyzer implements Visitable {
 			return Optional.of((IFile) resource);
 		}
 		return Optional.empty();
+	}
+	
+	private void print(final String action, final IResource resource) {
+		final Optional<IFile> javaFile = getJavaIFile(resource);
+		if (javaFile.isPresent()) {
+			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
+			ActiveOutlineConsole.out().println( String.format("%s CU: %s", action, cu.orElseThrow()) );
+		}
 	}
 
 }

@@ -16,7 +16,7 @@ public class DelegatingVisitor implements IResourceVisitor, IResourceDeltaVisito
 	protected final IProgressMonitor monitor;
 
 	private final List<Visitable> visitables = Collections.unmodifiableList( 
-		Arrays.asList( new ResourceGraphAnalyzer() ) 
+		Arrays.asList( new ConsolePrinterVisitor() ) 
 		);
 	
 	public DelegatingVisitor(final IProgressMonitor monitor) {
