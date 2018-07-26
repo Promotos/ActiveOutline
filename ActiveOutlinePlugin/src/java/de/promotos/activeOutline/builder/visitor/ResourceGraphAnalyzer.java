@@ -1,4 +1,4 @@
-package de.promotos.activeOutline.builder;
+package de.promotos.activeOutline.builder.visitor;
 
 import java.util.Optional;
 
@@ -10,15 +10,16 @@ import org.eclipse.jdt.core.JavaCore;
 
 import de.promotos.activeOutline.console.ActiveOutlineConsole;
 
-public class ResourceGraphAnalyzer implements ResourceAnalyzer {
+public class ResourceGraphAnalyzer implements Visitable {
 
 	@Override
-	public void analyze(final IResource resource) {
+	public boolean visit(final IResource resource) {
 		changed(resource);
+		return true;
 	}
 
 	@Override
-	public void analyze(IResourceDelta delta) {
+	public boolean visit(IResourceDelta delta) {
 		final IResource resource = delta.getResource();
 
 		switch (delta.getKind()) {
@@ -33,6 +34,7 @@ public class ResourceGraphAnalyzer implements ResourceAnalyzer {
 			;
 			break;
 		}
+		return true;
 	}
 
 	private void added(final IResource resource) {
