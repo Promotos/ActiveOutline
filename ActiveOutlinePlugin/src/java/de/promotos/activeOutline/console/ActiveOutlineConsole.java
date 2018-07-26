@@ -25,8 +25,9 @@ public class ActiveOutlineConsole {
 			.map(console -> (MessageConsole) console)
 			.filter(console -> CONSOLE_NAME.equals(console.getName()))
 			.findFirst()
-			.orElse(createNewConsole(consoleManager));
+			.orElseGet( () -> createNewConsole(consoleManager));
 	}
+	
 	
 	private final static MessageConsole createNewConsole(final IConsoleManager consoleManager) {
 		final MessageConsole newConsole = new MessageConsole(CONSOLE_NAME, null);
