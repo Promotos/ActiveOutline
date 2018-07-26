@@ -27,48 +27,49 @@ public class ResourceGraphAnalyzer implements ResourceAnalyzer {
 		final IResource resource = delta.getResource();
 
 		switch (delta.getKind()) {
-			case IResourceDelta.ADDED:
-				added(resource);
-				break;
-			case IResourceDelta.CHANGED:
-				changed(resource);
-				break;
-			case IResourceDelta.REMOVED:
-				removed(resource);;
-				break;
+		case IResourceDelta.ADDED:
+			added(resource);
+			break;
+		case IResourceDelta.CHANGED:
+			changed(resource);
+			break;
+		case IResourceDelta.REMOVED:
+			removed(resource);
+			;
+			break;
 		}
 	}
 
 	private void added(final IResource resource) {
 		Optional<IFile> javaFile = getJavaIFile(resource);
 		if (javaFile.isPresent()) {
-			
+
 			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
 			getOut().println("Added CU: " + cu.orElseThrow());
 		}
 	}
-	
+
 	private void changed(final IResource resource) {
 		Optional<IFile> javaFile = getJavaIFile(resource);
 		if (javaFile.isPresent()) {
-			
+
 			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
 			getOut().println("Changed CU: " + cu.orElseThrow());
 		}
 	}
-	
+
 	private void removed(final IResource resource) {
 		Optional<IFile> javaFile = getJavaIFile(resource);
 		if (javaFile.isPresent()) {
-			
+
 			Optional<ICompilationUnit> cu = Optional.ofNullable(JavaCore.createCompilationUnitFrom(javaFile.get()));
 			getOut().println("Removed CU: " + cu.orElseThrow());
 		}
 	}
-	
+
 	private Optional<IFile> getJavaIFile(final IResource resource) {
 		if (resource instanceof IFile && resource.getName().endsWith(".java")) {
-			return Optional.of( (IFile) resource);
+			return Optional.of((IFile) resource);
 		}
 		return Optional.empty();
 	}
