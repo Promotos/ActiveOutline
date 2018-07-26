@@ -5,7 +5,7 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 
 class DeltaVisitor implements IResourceDeltaVisitor {
-	
+
 	@Override
 	public boolean visit(IResourceDelta delta) throws CoreException {
 		new ResourceGraphAnalyzer().analyze(delta);

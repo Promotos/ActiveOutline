@@ -15,8 +15,7 @@ public class AddRemoveActiveOutlineNatureHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			for (Iterator<?> it = ((IStructuredSelection) selection).iterator(); it
-					.hasNext();) {
+			for (Iterator<?> it = ((IStructuredSelection) selection).iterator(); it.hasNext();) {
 				Object element = it.next();
 				IProject project = null;
 				if (element instanceof IProject) {
@@ -40,8 +39,7 @@ public class AddRemoveActiveOutlineNatureHandler extends AbstractHandler {
 	/**
 	 * Toggles sample nature on a project
 	 *
-	 * @param project
-	 *            to have sample nature added or removed
+	 * @param project to have sample nature added or removed
 	 */
 	private void toggleNature(IProject project) throws CoreException {
 		IProjectDescription description = project.getDescription();
