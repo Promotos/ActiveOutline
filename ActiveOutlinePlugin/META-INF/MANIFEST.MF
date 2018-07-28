@@ -106,3 +106,6 @@ Bundle-ClassPath: lib/bcpkix-jdk15on-1.59.jar,
  lib/WMI4Java-1.6.1.jar,
  .
 Bundle-RequiredExecutionEnvironment: JavaSE-10
+Bundle-Activator: de.promotos.activeOutline.ActiveOutlinePlugin
+Bundle-Vendor: Promotos
+Bundle-ActivationPolicy: lazy
