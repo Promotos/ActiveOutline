@@ -5,7 +5,7 @@ import org.eclipse.core.resources.IResourceDelta;
 
 public interface Visitable {
 
-	boolean visit(IResource res);
-	boolean visit(IResourceDelta delta);
+	void visit(IResource res);
+	void visit(IResourceDelta delta);
 	
 }

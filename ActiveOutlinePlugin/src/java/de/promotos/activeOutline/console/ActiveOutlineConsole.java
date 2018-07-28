@@ -8,24 +8,26 @@ import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 
+import de.promotos.activeOutline.lang.Assert;
+
 public class ActiveOutlineConsole {
 
 	private static final String CONSOLE_NAME = "Active Outline";
 	
 	public static MessageConsoleStream out() {
-		return findConsole(CONSOLE_NAME).newMessageStream();
+		return Assert.notNull(findConsole(CONSOLE_NAME).newMessageStream());
 	}
 
 	private static MessageConsole findConsole(String name) {
 		final ConsolePlugin consolePlugin = ConsolePlugin.getDefault();
 		final IConsoleManager consoleManager = consolePlugin.getConsoleManager();
 		
-		return Arrays.stream(consoleManager.getConsoles())
+		return Assert.notNull(Arrays.stream(consoleManager.getConsoles())
 			.filter(console -> console instanceof MessageConsole)
 			.map(console -> (MessageConsole) console)
 			.filter(console -> CONSOLE_NAME.equals(console.getName()))
 			.findFirst()
-			.orElseGet( () -> createNewConsole(consoleManager));
+			.orElseGet( () -> createNewConsole(consoleManager)));
 	}
 	
 	
