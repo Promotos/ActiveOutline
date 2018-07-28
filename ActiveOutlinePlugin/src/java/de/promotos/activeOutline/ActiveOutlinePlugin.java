@@ -1,13 +1,16 @@
 package de.promotos.activeOutline;
 
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.jdt.annotation.Nullable;
+
+import de.promotos.activeOutline.lang.Assert;
 
 public class ActiveOutlinePlugin extends Plugin {
 
 	/**
 	 * Singleton instance
 	 */
-	private static ActiveOutlinePlugin INSTANCE;
+	private static @Nullable ActiveOutlinePlugin INSTANCE;
 	
 	public ActiveOutlinePlugin() {
 		INSTANCE = this;
@@ -18,7 +21,7 @@ public class ActiveOutlinePlugin extends Plugin {
 	 * @return The instance
 	 */
 	public static final ActiveOutlinePlugin instance() {
-		return INSTANCE;
+		return Assert.notNull(INSTANCE);
 	}
 	
 }
