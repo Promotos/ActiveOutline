@@ -10,28 +10,40 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.annotation.Nullable;
+
+import de.promotos.activeOutline.lang.Assert;
 
 public class DelegatingVisitor implements IResourceVisitor, IResourceDeltaVisitor {
 	
 	protected final IProgressMonitor monitor;
 
-	private final List<Visitable> visitables = Collections.unmodifiableList( 
-		Arrays.asList( new ConsolePrinterVisitor() ) 
-		);
+	private final List<Visitable> visitables = Assert.notNull(
+			Collections.unmodifiableList( 
+					Arrays.asList( new ConsolePrinterVisitor() ) 
+		 			)
+			);
 	
 	public DelegatingVisitor(final IProgressMonitor monitor) {
 		this.monitor = monitor;
 	}
 	
 	@Override
-	public boolean visit(final IResource resource) {
-		visitables.stream().forEach( visitor -> visitor.visit(resource) );
-		return true;
+	public boolean visit(final @Nullable IResource resource) {
+	    if (resource != null) {
+	        visitables.stream().forEach( visitor -> visitor.visit(resource) );
+	        return true;
+	    }
+	    return false;
 	}
 
 	@Override
-	public boolean visit(final IResourceDelta resource) throws CoreException {
-		visitables.stream().forEach( visitor -> visitor.visit(resource) );
-		return true;
+	public boolean visit(final @Nullable IResourceDelta resource) throws CoreException {
+	    if (resource != null) {
+    		visitables.stream().forEach( visitor -> visitor.visit(resource) );
+    		return true;
+	    }
+	    return false;
 	}
+	
 }

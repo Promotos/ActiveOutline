@@ -5,6 +5,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jdt.annotation.Nullable;
+
+import de.promotos.activeOutline.lang.Assert;
 
 public class ActiveOutlineNature implements IProjectNature {
 
@@ -13,11 +16,11 @@ public class ActiveOutlineNature implements IProjectNature {
 	 */
 	public static final String NATURE_ID = "ActiveOutlinePlugin.activeOutlineNature";
 
-	private IProject project;
+	private @Nullable IProject project;
 
 	@Override
 	public void configure() throws CoreException {
-		IProjectDescription desc = project.getDescription();
+		IProjectDescription desc = getProject().getDescription();
 		ICommand[] commands = desc.getBuildSpec();
 
 		for (int i = 0; i < commands.length; ++i) {
@@ -32,7 +35,7 @@ public class ActiveOutlineNature implements IProjectNature {
 		command.setBuilderName(IncrementalGraphBuilder.BUILDER_ID);
 		newCommands[newCommands.length - 1] = command;
 		desc.setBuildSpec(newCommands);
-		project.setDescription(desc, null);
+		getProject().setDescription(desc, null);
 	}
 
 	@Override
@@ -45,7 +48,7 @@ public class ActiveOutlineNature implements IProjectNature {
 				System.arraycopy(commands, 0, newCommands, 0, i);
 				System.arraycopy(commands, i + 1, newCommands, i, commands.length - i - 1);
 				description.setBuildSpec(newCommands);
-				project.setDescription(description, null);
+				getProject().setDescription(description, null);
 				return;
 			}
 		}
@@ -53,11 +56,11 @@ public class ActiveOutlineNature implements IProjectNature {
 
 	@Override
 	public IProject getProject() {
-		return project;
+		return Assert.notNull(project);
 	}
 
 	@Override
-	public void setProject(IProject project) {
+	public void setProject(@Nullable IProject project) {
 		this.project = project;
 	}
 
