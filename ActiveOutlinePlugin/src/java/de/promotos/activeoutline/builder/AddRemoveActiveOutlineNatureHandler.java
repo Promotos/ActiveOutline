@@ -1,4 +1,4 @@
-package de.promotos.activeOutline.builder;
+package de.promotos.activeoutline.builder;
 
 import java.util.Iterator;
 import org.eclipse.core.commands.*;

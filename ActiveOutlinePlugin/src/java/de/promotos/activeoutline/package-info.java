@@ -1,3 +1,3 @@
 
 @org.eclipse.jdt.annotation.NonNullByDefault
-package de.promotos.activeOutline.builder;
+package de.promotos.activeoutline;

@@ -1,4 +1,4 @@
-package de.promotos.activeOutline.builder.visitor;
+package de.promotos.activeoutline.builder.visitor;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,7 +12,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.annotation.Nullable;
 
-import de.promotos.activeOutline.lang.Assert;
+import de.promotos.activeoutline.lang.Assert;
 
 public class DelegatingVisitor implements IResourceVisitor, IResourceDeltaVisitor {
 	
@@ -20,7 +20,10 @@ public class DelegatingVisitor implements IResourceVisitor, IResourceDeltaVisito
 
 	private final List<Visitable> visitables = Assert.notNull(
 			Collections.unmodifiableList( 
-					Arrays.asList( new ConsolePrinterVisitor() ) 
+					Arrays.asList( 
+					        new ConsolePrinterVisitor(),
+					        new JavaPackageVisitor()
+					        ) 
 		 			)
 			);
 	
