@@ -1,4 +1,4 @@
-package de.promotos.activeOutline.builder.visitor;
+package de.promotos.activeoutline.builder.visitor;
 
 import java.util.Optional;
 
@@ -7,9 +7,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jdt.core.ICompilationUnit;
 
-import de.promotos.activeOutline.console.ActiveOutlineConsole;
+import de.promotos.activeoutline.console.ActiveOutlineConsole;
 
-public class ConsolePrinterVisitor extends AbstractVisitorJava {
+public class ConsolePrinterVisitor extends AbstractVisitor {
 
     protected void added(final IResource resource) {
 		print("Added", resource);

@@ -1,4 +1,4 @@
-package de.promotos.activeOutline.console;
+package de.promotos.activeoutline.console;
 
 import java.util.Arrays;
 
@@ -8,7 +8,7 @@ import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 
-import de.promotos.activeOutline.lang.Assert;
+import de.promotos.activeoutline.lang.Assert;
 
 public class ActiveOutlineConsole {
 

@@ -1,4 +1,4 @@
-package de.promotos.activeOutline.builder.visitor;
+package de.promotos.activeoutline.builder.visitor;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;

@@ -1,4 +1,4 @@
-package de.promotos.activeOutline.builder;
+package de.promotos.activeoutline.builder;
 
 import java.util.Map;
 
@@ -10,7 +10,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.annotation.Nullable;
 
-import de.promotos.activeOutline.builder.visitor.DelegatingVisitor;
+import de.promotos.activeoutline.builder.visitor.DelegatingVisitor;
 
 public class IncrementalGraphBuilder extends IncrementalProjectBuilder {
 

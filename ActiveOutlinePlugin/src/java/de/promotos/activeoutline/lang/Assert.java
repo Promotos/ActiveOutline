@@ -1,4 +1,4 @@
-package de.promotos.activeOutline.lang;
+package de.promotos.activeoutline.lang;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;

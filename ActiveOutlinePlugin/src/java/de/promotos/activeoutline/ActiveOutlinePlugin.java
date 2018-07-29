@@ -1,9 +1,9 @@
-package de.promotos.activeOutline;
+package de.promotos.activeoutline;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jdt.annotation.Nullable;
 
-import de.promotos.activeOutline.lang.Assert;
+import de.promotos.activeoutline.lang.Assert;
 
 public class ActiveOutlinePlugin extends Plugin {
 

@@ -1,4 +1,4 @@
-package de.promotos.activeOutline.lang;
+package de.promotos.activeoutline.lang;
 
 import java.util.Optional;
 
