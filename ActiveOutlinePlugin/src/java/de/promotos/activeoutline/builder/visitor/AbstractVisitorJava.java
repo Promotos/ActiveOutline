@@ -46,7 +46,7 @@ public abstract class AbstractVisitorJava extends AbstractVisitor {
     protected @Nullable ICompilationUnit getCompilationUnit(final IResource resource) {
         final Optional<IFile> javaFile = getJavaFile(resource);
         if (javaFile.isPresent()) {
-            final ICompilationUnit cu = getCompilationUnit(javaFile.get());
+            final @Nullable ICompilationUnit cu = getCompilationUnit(javaFile.get());
             if (cu != null) {
                 return cu;
             }

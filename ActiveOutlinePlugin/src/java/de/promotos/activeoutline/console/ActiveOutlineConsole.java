@@ -14,11 +14,13 @@ public class ActiveOutlineConsole {
 
 	private static final String CONSOLE_NAME = "Active Outline";
 	
+	private ActiveOutlineConsole() {}
+	
 	public static MessageConsoleStream out() {
-		return Assert.notNull(findConsole(CONSOLE_NAME).newMessageStream());
+		return Assert.notNull(findConsole().newMessageStream());
 	}
 
-	private static MessageConsole findConsole(String name) {
+	private static MessageConsole findConsole() {
 		final ConsolePlugin consolePlugin = ConsolePlugin.getDefault();
 		final IConsoleManager consoleManager = consolePlugin.getConsoleManager();
 		
@@ -31,7 +33,7 @@ public class ActiveOutlineConsole {
 	}
 	
 	
-	private final static MessageConsole createNewConsole(final IConsoleManager consoleManager) {
+	private static final MessageConsole createNewConsole(final IConsoleManager consoleManager) {
 		final MessageConsole newConsole = new MessageConsole(CONSOLE_NAME, null);
 		consoleManager.addConsoles(new IConsole[] { newConsole });
 		return newConsole;

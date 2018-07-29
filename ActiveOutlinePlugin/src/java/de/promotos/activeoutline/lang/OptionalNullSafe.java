@@ -8,6 +8,8 @@ import java.util.Optional;
  */
 public class OptionalNullSafe {
 
+    private OptionalNullSafe() {}
+    
     /**
      * @see java.util.Optional#empty();
      */

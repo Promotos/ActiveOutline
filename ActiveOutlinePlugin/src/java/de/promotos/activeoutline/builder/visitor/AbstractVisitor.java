@@ -36,6 +36,8 @@ public abstract class AbstractVisitor implements Visitable {
         case IResourceDelta.REMOVED:
             removed(resource);
             break;
+        default:
+            throw new IllegalStateException("Illegal state " + delta.getKind() + " in incremental builder.");
         }
     }
     
